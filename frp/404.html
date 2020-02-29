@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<title>Fog Machine</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:700,900" rel="stylesheet">
+	<style type="text/css">
+		body {
+		  	overflow: hidden;
+		  	font-family: 'Open Sans Light', sans-serif;
+		  	background: #030005;
+		  	display: flex;
+			align-items: center;
+			width: 100%;
+			justify-content: center;
+		}
+
+		html, body {
+			margin: 0px;
+			padding: 0px;
+			border: 0px;
+			min-height: 100vh;
+		}
+
+		.clearfix::after {
+			content: "";
+			clear: both;
+			display: table;
+		}
+
+		.hide {
+			display: none;
+		}
+
+		h1 {
+			font-family: 'Montserrat', sans-serif;
+			font-size: 200px;
+			font-weight: 900;
+			color: #030005;
+		/*	text-shadow: -1px -1px 0px #8400ff, 1px 1px 0px #ff005a;*/
+			text-shadow: -2px -2px 4px #8400ff, 2px 2px 4px #ff005a;
+			letter-spacing: -18px;
+			text-align: center;
+			margin: 0;
+			padding-right: 30px;
+			margin-bottom: 25px;
+		}
+
+		h2 {
+			font-family: 'Montserrat', sans-serif;
+			font-size: 42px;
+			font-weight: 700;
+			color: #fff;
+			text-transform: uppercase;
+			text-shadow: 0px 2px 0px #8400ff;
+			letter-spacing: 13px;
+			width: 100%;
+			text-align: center;
+			margin: 0;
+		}
+
+		.notfound {
+			margin-bottom: 150px;
+			width: 100%;
+		}
+
+		@media only screen and (max-width: 860px) {
+		  	h1 {
+		      	font-size: 140px;
+				letter-spacing: -14px;
+				padding-right: 15px;
+		  	}
+		}
+
+		@media only screen and (max-width: 620px) {
+		  	h1 {
+		      	font-size: 80px;
+				letter-spacing: -10px;
+				padding-right: 8px;
+				text-shadow: -1px -1.5px 3px #8400ff, 1px 1.5px 3px #ff005a
+		  	}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="notfound">
+		<h1>Fog Machine</h1>
+		<h2>Reverse Proxy Network</h2>
+	</div>
+</body>
+
+</html>
