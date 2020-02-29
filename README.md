@@ -1,3 +1,17 @@
+## Tunnel Server
+
+A tunnel server is a server that clients behind firewalls and NATs can connect to.  The tunnel server forwards incoming traffic to the client through a tunnel.  Anyone can then connect to the client's computer as if it where publicly available.
+
+Features Include:
+* Tunnels all TCP and UDP traffic
+* Can upgrade HTTP to HTTPS
+* Supports multiple tunnels at one time
+* Forwards incoming traffic to the correct tunnel based off domain and subdomain
+* Can tunnel through restrictive firewalls and 4G networks
+* Managed with a HTTP API
+* Designed as a service than can be deployed in a fleet for easy scalability.  Tunnel servers are designed to be coordinated with a management service.
+
+
 ## Modify Install Script
 
 Install script is in `/bash/install.sh`
@@ -32,9 +46,41 @@ This install script was designed to work on Ubuntu 18.04 on Digital Ocean server
     - EXCEPT FOR `api.YOUR-DOMAIN`
 - `pm2 restart all`
 
+
 ## Setup Firewall
 
 You will want to block all incoming connections for ports below 21000. Ports above 21000 should allow all incoming traffic.  Ports 22, 80, and 443 need to allow incoming connections as well.
+
+
+## API
+
+Tunnel servers are meant to be used in a fleet and coordinated by a separate management service.  As a result, the API is really simple.  
+
+Their is an authentication system, but there are no accounts or permissions system. If you have the auth key you have admin level access.  You're key is generated on install and saved to `~/api-key/jwt.key`.  To access the API sign an empty JWT with that key and attach it to the `x-access-token` header.
+
+The API endpoints are:
+
+* `/` GET - Gets server info, which is just a list of domains the server supports
+* `/connections/info` GET - Gets status of all tunnels registered with server
+* `/connection/add` POST - Adds or re-enables a tunnel
+* `/connection/disable` POST - Disables a tunnel
+
+
+## Connecting You're First Tunnel
+
+First you need to register a tunnel through the API
+
+```javascript
+// Coming Soon
+
+```
+
+Then you have to connect FRP with a config like:
+
+```bash
+# Coming Soon
+```
+
 
 ## Limitations
 
@@ -49,6 +95,7 @@ Let's encrypt only let's you install 5 of the same certificates each week. This 
 # modified script
 ./.acme.sh/acme.sh --issue --dns dns_dynu -d *.${i} -d ${i}
 ```
+
 
 ## TODO
 
