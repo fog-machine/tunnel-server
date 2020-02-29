@@ -12,7 +12,7 @@ Features Include:
 * Designed as a service than can be deployed in a fleet for easy scalability.  Tunnel servers are designed to be coordinated with a management service.
 
 
-## Modify Install Script
+## Setup and Install
 
 Install script is in `/bash/install.sh`
 
@@ -47,7 +47,7 @@ This install script was designed to work on Ubuntu 18.04 on Digital Ocean server
 - `pm2 restart all`
 
 
-## Setup Firewall
+## Configure Firewall
 
 You will want to block all incoming connections for ports below 21000. Ports above 21000 should allow all incoming traffic.  Ports 22, 80, and 443 need to allow incoming connections as well.
 

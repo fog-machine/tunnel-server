@@ -76,7 +76,7 @@ touch domain-info/wildcards
 echo $(openssl rand -base64 128) > api-key/jwt.key
 
 # Clone Repo
-git clone git@github.com:fog-machine/tunnel-server.git
+git clone https://github.com/fog-machine/tunnel-server.git
 
 # Install
 cd tunnel-server
