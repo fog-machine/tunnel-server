@@ -69,7 +69,7 @@ function bootReverseProxy(fullDomain, keepGoing) {
 
   try {
     tunnels[fullDomain] = spawn(path.join(__dirname, 'frp/frps'), ['-c', `./${fullDomain}.ini`], {
-      cwd:  path.join(__dirname, `../../frp-config`)
+      cwd:  path.join(__dirname, `../frp-config`)
     });
 
     tunnels[fullDomain].stdout.on('data', (data) => {

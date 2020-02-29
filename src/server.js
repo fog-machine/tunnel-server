@@ -23,7 +23,7 @@ exports.setup = port => {
 
   // Auth System
   // The key is made with the install script
-  const jwtSecret = fs.readFileSync(path.join(__dirname, '../../../api-key/jwt.key'), 'utf8').trim();
+  const jwtSecret = fs.readFileSync(path.join(__dirname, '../../api-key/jwt.key'), 'utf8').trim();
   rpn.use((req, res, next) => {
     // check header or url parameters or post parameters for token
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -37,7 +37,7 @@ exports.setup = port => {
   });
 
   rpn.get('/', (req, res) => {
-    const domainFile = fs.readFileSync(path.join(__dirname, '../../../domain-info/wildcards'), 'utf8').trim();
+    const domainFile = fs.readFileSync(path.join(__dirname, '../../domain-info/wildcards'), 'utf8').trim();
     res.json({ domains: domainFile.trim().split(eol) }); 
   });
 
@@ -59,12 +59,12 @@ exports.setup = port => {
     const fullDomain = value.subdomain + '.' + value.domain; 
 
     // Make sure domain doesn't conflict with api domain
-    if (fullDomain === fs.readFileSync(path.join(__dirname, '../../../domain-info/api'), 'utf8').trim()) {
+    if (fullDomain === fs.readFileSync(path.join(__dirname, '../../domain-info/api'), 'utf8').trim()) {
       return res.status(422).json({ error: 'Cannot register the api domain' });
     }
 
     // Make sure we support the domain
-    const supportedDomains = fs.readFileSync(path.join(__dirname, '../../../domain-info/wildcards'), 'utf8').trim().split(eol);
+    const supportedDomains = fs.readFileSync(path.join(__dirname, '../../domain-info/wildcards'), 'utf8').trim().split(eol);
     if (supportedDomains.indexOf(value.domain) === -1) {
       return res.status(422).json({ error: 'Domain not supported' });
     }
