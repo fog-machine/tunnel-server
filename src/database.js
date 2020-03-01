@@ -1,7 +1,9 @@
 const sqlite3 = require('sqlite3').verbose();
 var db;
+var absPath;
 
 exports.setup = dbPath => {
+  absPath = dbPath;
   sqlite3.Database.prototype.runAsync = function (sql, params) {
     return new Promise((resolve, reject) => {
       this.run(sql, params, function (err) {
@@ -61,6 +63,6 @@ exports.getDb = () => {
   return db;
 }
 
-exports.getFreshSql = (dbPath) => {
-  return new sqlite3.Database(dbPath);
+exports.getFreshSql = () => {
+  return new sqlite3.Database(absPath);
 }
