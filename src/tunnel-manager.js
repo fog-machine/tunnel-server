@@ -28,7 +28,7 @@ exports.initiateTunnel = async (subdomain, domain, frpPort, httpsPort, frpPasswo
   // setup frps.ini file
   try{
     const iniString = `[common]${eol}bind_port = ${frpPort}${eol}vhost_http_port = ${httpsPort}${eol}allow_ports = ${portPort}${eol}token = ${frpPassword}${eol}custom_404_page = ${path.join(__dirname, '../frp/404.html')}`
-    fs.writeFileSync(path.join(__dirname, `../../../frp-config/${fullDomain}.ini`), iniString);
+    fs.writeFileSync(path.join(__dirname, `../../frp-config/${fullDomain}.ini`), iniString);
   } catch(err) {
     winston.error(`Failed to write FRP ini to ${fullDomain}`);
     winston.error(err.message);

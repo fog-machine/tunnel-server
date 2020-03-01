@@ -41,6 +41,7 @@ This install script was designed to work on Ubuntu 18.04 on Digital Ocean server
 ## Manually Reset A Server
 
 - Delete all files ~/frp-config
+- Delete SQLite file
 - Delete all files inf /etc/nginx/conf/sites-enabled
     - EXCEPT FOR `default`
     - EXCEPT FOR `api.YOUR-DOMAIN`
