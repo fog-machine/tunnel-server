@@ -1,4 +1,4 @@
-## Tunnel Server
+## Fog Machine Tunnel Server
 
 A tunnel server is a server that clients behind firewalls and NATs can connect to.  The tunnel server forwards incoming traffic to the client through a tunnel.  Anyone can then connect to the client's computer as if it where publicly available.
 
