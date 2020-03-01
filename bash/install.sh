@@ -2,6 +2,8 @@
 # TODO: Setup IP tables
 # TODO: setup SQLite DB before installing PM2
 
+tput reset
+
 echo
 echo Welcome to the RPN Server Install Script
 echo

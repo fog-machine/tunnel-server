@@ -16,9 +16,20 @@ Features Include:
 
 Install script is in `/bash/install.sh`
 
-The install script has a potion at the bottom commented out.  The commented out code sets up the SSL certificates for the server using a DNS verification method.
+The install script has a portion at the bottom commented out.  The commented out code sets up the SSL certificates for the server using a DNS verification method.
 
 I use DynuDNS in this script.  If you use DynyDNS as well, you can just add in your keys and it will work. If you have another DNS provider or want to install the certs manually, [check out the documentation for acme.sh to see how.](https://github.com/acmesh-official/acme.sh)
+
+To setup a new server from scratch, follow these steps:
+
+- ssh into server as root
+- copy install script to `~/install.sh`
+- `chmod 755 install.sh`
+- `./install.sh`
+- check that script was successful
+    - `pm2 list all` and `pm2 logs` to make sure the server is running
+    - check of nginx config files
+    - check `crontab -l` to make sure acme.sh add a certificate renewal job
 
 
 ## Platforms
@@ -26,25 +37,13 @@ I use DynuDNS in this script.  If you use DynyDNS as well, you can just add in y
 This install script was designed to work on Ubuntu 18.04 on Digital Ocean servers.
 
 
-## Setup New Tunnel Server
-
-- ssh into server as root
-- copy install script
-- `chmod 755 install.sh` for permissions
-- run script
-- check that script was successful
-    - `pm2 list all` and `pm2 logs` to make sure the server is running
-    - check of nginx config files
-    - check `crontab -l`
-
-
 ## Manually Reset A Server
 
 - Delete all files ~/frp-config
 - Delete SQLite file `rpn.db`
-- Delete all files inf /etc/nginx/conf/sites-enabled
+- Delete all files in /etc/nginx/conf/sites-enabled
     - EXCEPT FOR `default`
-    - EXCEPT FOR `api.YOUR-DOMAIN`
+    - EXCEPT FOR your API domain config
 - `pm2 restart all`
 - `service nginx restart`
 
@@ -58,7 +57,7 @@ You will want to block all incoming connections for ports below 21000. Ports abo
 
 Tunnel servers are meant to be used in a fleet and coordinated by a separate management service.  As a result, the API is really simple.  
 
-Their is an authentication system, but there are no accounts or permissions system. If you have the auth key you have admin level access.  You're key is generated on install and saved to `~/api-key/jwt.key`.  To access the API sign an empty JWT with that key and attach it to the `x-access-token` header.
+There is an authentication system, but no fine grained permissions systems. If you have the auth key you have admin level access.  You're key is generated on install and saved to `~/api-key/jwt.key`.  To access the API sign an empty JWT with that key and attach it to the `x-access-token` header.
 
 The API endpoints are:
 
