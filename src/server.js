@@ -70,7 +70,7 @@ exports.setup = port => {
     }
 
     try {
-      const row = db.getAsync('SELECT * FROM connections WHERE full_domain = ?', [fullDomain]);
+      const row = await db.getAsync('SELECT * FROM connections WHERE full_domain = ?', [fullDomain]);
       // Domain already register, re-enable it
       if (row) {
         await db.runAsync('UPDATE connections SET disabled = 0, management_server_user_id = ?, frp_password = ? WHERE full_domain = ?', [value.userId, value.frpPassword, fullDomain]);
