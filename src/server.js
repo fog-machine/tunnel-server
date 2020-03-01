@@ -99,7 +99,8 @@ exports.setup = port => {
       await tempDB.runAsync('UPDATE connections SET https_port = ?, port_port = ?, frp_bind_port = ?, frp_password = ? WHERE connection_id = ?', [httpsPort, portPort, frpBindPort, value.frpPassword, conId.lastID]);
       
       tunneler.initiateTunnel(value.subdomain, value.domain, frpBindPort, httpsPort, value.frpPassword, portPort);
-      
+      await tempDB.runAsync('COMMIT');
+      tempDB.close();
       return res.json({
         rpnPassword: value.frpPassword,
         rpnPort: frpBindPort, // port for FRP
@@ -107,6 +108,7 @@ exports.setup = port => {
       });
     } catch (err) {
       await tempDB.runAsync('ROLLBACK');
+      tempDB.close();
       return res.status(500).status({ error: 'Critical Error.  Check the logs for more information' });
     }
   });
