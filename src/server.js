@@ -87,7 +87,7 @@ exports.setup = port => {
 
     // Domain Does Not Exist
     try {
-      const tempDB = require('./database').getFreshSql(program.dbPath);
+      const tempDB = require('./database').getFreshSql(path.join(process.cwd(), 'rpn.db'));
       await tempDB.runAsync('BEGIN');
       const conId = await db.runAsync('INSERT INTO connections (full_domain, domain, subdomain, management_server_user_id) VALUES (?, ?, ?, ?)', [fullDomain, value.domain, value.subdomain, value.userId]);
       // NOTE: This is a lazy algorithm that let's us easily manage 20,000 accounts, and fails with anything more than that

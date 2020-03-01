@@ -41,11 +41,12 @@ This install script was designed to work on Ubuntu 18.04 on Digital Ocean server
 ## Manually Reset A Server
 
 - Delete all files ~/frp-config
-- Delete SQLite file
+- Delete SQLite file `rpn.db`
 - Delete all files inf /etc/nginx/conf/sites-enabled
     - EXCEPT FOR `default`
     - EXCEPT FOR `api.YOUR-DOMAIN`
 - `pm2 restart all`
+- `service nginx restart`
 
 
 ## Configure Firewall
