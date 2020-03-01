@@ -134,7 +134,7 @@ server {
 }" > /etc/nginx/sites-enabled/${apiDomain}
 
 # Install pm2
-cd ../..
+cd ..
 npm install -g pm2
 
 # config pm2
