@@ -89,14 +89,14 @@ exports.setup = port => {
     try {
       const tempDB = require('./database').getFreshSql();
       await tempDB.runAsync('BEGIN');
-      const conId = await db.runAsync('INSERT INTO connections (full_domain, domain, subdomain, management_server_user_id) VALUES (?, ?, ?, ?)', [fullDomain, value.domain, value.subdomain, value.userId]);
+      const conId = await tempDB.runAsync('INSERT INTO connections (full_domain, domain, subdomain, management_server_user_id) VALUES (?, ?, ?, ?)', [fullDomain, value.domain, value.subdomain, value.userId]);
       // NOTE: This is a lazy algorithm that let's us easily manage 20,000 accounts, and fails with anything more than that
       // A better algorithm would also randomize ports
       const httpsPort = conId.lastID + 1000;
       const portPort = conId.lastID + 21000;
       const frpBindPort = conId.lastID + 41000;
 
-      await db.runAsync('UPDATE connections SET https_port = ?, port_port = ?, frp_bind_port = ?, frp_password = ? WHERE connection_id = ?', [httpsPort, portPort, frpBindPort, value.frpPassword, conId.lastID]);
+      await tempDB.runAsync('UPDATE connections SET https_port = ?, port_port = ?, frp_bind_port = ?, frp_password = ? WHERE connection_id = ?', [httpsPort, portPort, frpBindPort, value.frpPassword, conId.lastID]);
       
       tunneler.initiateTunnel(value.subdomain, value.domain, frpBindPort, httpsPort, value.frpPassword, portPort);
       
