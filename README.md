@@ -2,14 +2,16 @@
 
 A tunnel server is a server that clients behind firewalls and NATs can connect to.  The tunnel server forwards incoming traffic to the client through a tunnel.  Anyone can then connect to the client's computer as if it where publicly available.
 
-Features Include:
+
+## Features
+
 * Tunnels all TCP and UDP traffic
 * Can upgrade HTTP to HTTPS
 * Supports multiple tunnels at one time
-* Forwards incoming traffic to the correct tunnel based off domain and subdomain
-* Can tunnel through restrictive firewalls and 4G networks
+* Forwards incoming traffic to the correct tunnel based off the domain/subdomain of the request
+* Can tunnel through firewalls and 4G networks
 * Managed with a HTTP API
-* Designed as a service than can be deployed in a fleet for easy scalability.  Tunnel servers are designed to be coordinated with a management service.
+* Designed as a service than can be deployed in a fleet for easy scalability.  Tunnel servers are designed to be [coordinated with a management service](https://github.com/fog-machine/manager-server)
 
 
 ## Setup and Install
@@ -57,7 +59,7 @@ You will want to block all incoming connections for ports below 21000. Ports abo
 
 Tunnel servers are meant to be used in a fleet and coordinated by a separate management service.  As a result, the API is really simple.  
 
-There is an authentication system, but no fine grained permissions systems. If you have the auth key you have admin level access.  You're key is generated on install and saved to `~/api-key/jwt.key`.  To access the API sign an empty JWT with that key and attach it to the `x-access-token` header.
+There is an authentication system, but no fine grained permissions systems. If you have the auth key you have admin level access.  You're key is generated with the install script and saved to `~/api-key/jwt.key`.  To access the API sign an empty JWT with that key and attach it to the `x-access-token` header.
 
 The API endpoints are:
 
@@ -69,18 +71,58 @@ The API endpoints are:
 
 ## Connecting You're First Tunnel
 
-First you need to register a tunnel through the API
+This is just for testing purposes. This script will show you how to add a new tunnel and connect to it.  You will need to get the key from the `~/api-key/jwt.key` file on your tunnel server.
 
 ```javascript
-// Coming Soon
+// Sign a token
+const jwt = require('jsonwebstoken');
+const serverKey = 'KEY YOU GOT FROM ~/api-key/jwt.key';
+const token = jwt.sign({}, serverKey);
+console.log(token); // prints out the jwt
 
+// Send a add tunnel request to the tunnel server
+const axios = require('axios');
+const res = axios({
+    method: 'post',
+    url: `https://YOUR-DOMAIN.COM/connection/add`, 
+    headers: { 'accept': 'application/json', 'x-access-token': token },
+    responseType: 'json',
+    data: {
+        "subdomain": 'test',
+        "domain": 'YOUR-DOMAIN.COM',
+        "userId": '5', // used by manager service. It doesn't matter what you put in here
+        "frpPassword": 'YOUR_FRP_PASSWORD'
+    }
+}).catch(err => console.log(err));
+
+// The response contains info on your tunnel configuration
+console.log(res);
 ```
 
-Then you have to connect FRP with a config like:
+Then you have to make an FRP config file.  There are many ways to setup and FRP config.  This way sets up the config to convert HTTP to HTTPS traffic
+
+```ini
+[common]
+server_addr = 100.000.000.000
+server_port = 5555 # this is returned in the tunnel creation responses
+token = YOUR_FRP_PASSWORD
+
+[web]
+type = http
+local_ip = 127.0.0.1
+custom_domains = test.YOUR_DOMAIN.COM
+local_port = 2000 # port your webserver is running on
+```
+
+And finally launch frp with:
 
 ```bash
-# Coming Soon
+./frpc -c /path/to/frpc.conf
 ```
+
+The FRP client can be [downloaded from the FRP github page](https://github.com/fatedier/frp/releases)
+
+FRP configuration is [automated in the Fog Machine client](https://github.com/fog-machine/basic-client).
 
 
 ## Limitations
