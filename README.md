@@ -71,7 +71,9 @@ The API endpoints are:
 
 ## Connecting You're First Tunnel
 
-This is just for testing purposes. This script will show you how to add a new tunnel and connect to it.  You will need to get the key from the `~/api-key/jwt.key` file on your tunnel server.
+This is just for testing purposes. The manager service handles all accounts and tunnel creation and destruction. 
+
+This script will show you how to add a new tunnel and connect to it.  You will need to get the key from the `~/api-key/jwt.key` file on your tunnel server before doing starting.
 
 ```javascript
 // Sign a token
@@ -99,11 +101,11 @@ const res = axios({
 console.log(res);
 ```
 
-Then you have to make an FRP config file.  There are many ways to setup and FRP config.  This way sets up the config to convert HTTP to HTTPS traffic
+Then you have to make an FRP config file.  There are many ways to setup the FRP config.  The way shown here sets up the config to convert HTTP to HTTPS traffic:
 
 ```ini
 [common]
-server_addr = 100.000.000.000
+server_addr = 100.000.000.000 # Tunnel server IP
 server_port = 5555 # this is returned in the tunnel creation responses
 token = YOUR_FRP_PASSWORD
 
