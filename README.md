@@ -20,7 +20,7 @@ Install script is in `/bash/install.sh`
 
 The install script has a portion at the bottom commented out.  The commented out code sets up the SSL certificates for the server using a DNS verification method.
 
-I use DynuDNS in this script.  If you use DynyDNS as well, you can just add in your keys and it will work. If you have another DNS provider or want to install the certs manually, [check out the documentation for acme.sh to see how.](https://github.com/acmesh-official/acme.sh)
+I use DynuDNS in this script.  If you use DynuDNS as well, you can just add in your keys and it will work. If you have another DNS provider or want to install the certs manually, [check out the documentation for acme.sh to see how.](https://github.com/acmesh-official/acme.sh)
 
 To setup a new server from scratch, follow these steps:
 
@@ -146,8 +146,8 @@ Let's encrypt only let's you install 5 of the same certificates each week. This 
 
 This project is still in the early stages of development.  There's a lot of improvements to be made:
 
-* Setup IP tables on install so a firewall is not needed
+* Setup IP tables on install
 * Add support for Wireguard.  When tunnels are created the user should be able to choose between FRP and Wireguard
-* Tunnel processes are managed by a nodeJS program.  This was done to get the program finished as fast as possible.  There are better ways to do this
+* Tunnel processes are managed by a NodeJS program.  This was done to get the program finished as fast as possible.  There are better ways to do this
 * Improve installation method to support more platforms
 * Need scripts to add new domains, change API domain, etc.
